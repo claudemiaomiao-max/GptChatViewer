@@ -278,9 +278,10 @@
 
     /* 自托管字体示例（把 .woff2 放到同仓库的 fonts/ 目录后再启用） */
     /*
-    @font-face { font-family: 'LXGW WenKai'; src: url('fonts/LXGWWenKai-Regular.woff2') format('woff2'); font-display: swap; }
-    @font-face { font-family: 'Smiley Sans'; src: url('fonts/SmileySans-Oblique.woff2') format('woff2'); font-display: swap; }
-    @font-face { font-family: 'Source Han Sans SC'; src: url('fonts/SourceHanSansSC-Regular.woff2') format('woff2'); font-display: swap; }
+    @font-face { font-family: 'NaikaiFont'; src: url('fonts/NaikaiFont-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'NaikaiFont'; src: url('fonts/NaikaiFont-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'MoonStarsKai'; src: url('fonts/MoonStarsKai-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'MoonStarsKai'; src: url('fonts/MoonStarsKai-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
     */
 
     .settings-buttons { display: flex; gap: 12px; margin-top: 24px; }
@@ -944,7 +945,7 @@
   <div class="settings-section"><label class="settings-label">自定义头像</label><div class="avatar-upload-section"><div class="avatar-upload-item"><div class="avatar-upload-preview" id="user-avatar-preview" onclick="document.getElementById('user-avatar-input').click()">🧸<span class="avatar-delete" onclick="event.stopPropagation(); deleteAvatar('user')">×</span></div><span class="avatar-upload-label">用户</span><input type="file" id="user-avatar-input" class="avatar-upload-input" accept="image/*" onchange="handleAvatarUpload(event, 'user')"></div><div class="avatar-upload-item"><div class="avatar-upload-preview" id="ai-avatar-preview" onclick="document.getElementById('ai-avatar-input').click()">🤖<span class="avatar-delete" onclick="event.stopPropagation(); deleteAvatar('ai')">×</span></div><span class="avatar-upload-label">助手</span><input type="file" id="ai-avatar-input" class="avatar-upload-input" accept="image/*" onchange="handleAvatarUpload(event, 'ai')"></div></div></div>
   <div class="settings-section"><label class="settings-label">主题颜色</label><div class="theme-selector"><div class="theme-dot pink active" data-theme="pink" onclick="selectTheme('pink')" title="樱花粉"></div><div class="theme-dot brown" data-theme="brown" onclick="selectTheme('brown')" title="奶茶棕"></div><div class="theme-dot blue" data-theme="blue" onclick="selectTheme('blue')" title="雾霾蓝"></div><div class="theme-dot purple" data-theme="purple" onclick="selectTheme('purple')" title="香芋紫"></div><div class="theme-dot green" data-theme="green" onclick="selectTheme('green')" title="抹茶绿"></div><div class="theme-dot dark" data-theme="dark" onclick="selectTheme('dark')" title="夜间模式"></div></div></div>
   <div class="settings-section"><label class="settings-label">聊天背景</label><div class="pattern-selector"><div class="pattern-option none active" data-pattern="none" onclick="selectPattern('none')" title="无"><div class="pattern-preview"></div></div><div class="pattern-option grid" data-pattern="grid" onclick="selectPattern('grid')" title="格纹"><div class="pattern-preview"></div></div><div class="pattern-option dots" data-pattern="dots" onclick="selectPattern('dots')" title="波点"><div class="pattern-preview"></div></div><div class="pattern-option stripes" data-pattern="stripes" onclick="selectPattern('stripes')" title="条纹"><div class="pattern-preview"></div></div><div class="pattern-option custom" data-pattern="custom" onclick="handleCustomBgClick()" title="自定义"><div class="pattern-preview" id="custom-bg-preview"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><span class="bg-delete" onclick="event.stopPropagation(); deleteCustomBg()">×</span></div><input type="file" id="bg-upload-input" class="avatar-upload-input" accept="image/*" onchange="handleBgUpload(event)"></div></div>
-  <div class="settings-section"><label class="settings-label">显示字体</label><select class="font-select" id="chatFontSelect" onchange="selectChatFont(this.value)"><option value="system">系统</option><option value="lxgw-wenkai">文楷</option><option value="smiley-sans">得意黑</option><option value="source-han-sans">思源黑体</option></select></div>
+  <div class="settings-section"><label class="settings-label">显示字体</label><select class="font-select" id="chatFontSelect" onchange="selectChatFont(this.value)"><option value="system">系统</option><option value="naikai">内海简体</option><option value="moonstars">星月楷</option><option value="source-han-sans">思源黑体</option></select></div>
   <div class="settings-section"><label class="settings-label">字体大小</label><div class="fontsize-selector"><button class="fontsize-btn" data-size="small" onclick="selectFontSize('small')">小</button><button class="fontsize-btn active" data-size="medium" onclick="selectFontSize('medium')">中</button><button class="fontsize-btn" data-size="large" onclick="selectFontSize('large')">大</button></div></div><div class="settings-buttons"><button class="modal-btn primary" onclick="saveSettings()">保存</button><button class="modal-btn cancel" onclick="closeSettings()">取消</button></div></div></div>
   <div class="toast" id="toast"></div>
   <header class="header"><div class="header-left"><button class="header-btn" onclick="toggleDrawer()"><svg class="icon-svg" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><button class="header-btn" onclick="document.getElementById('file-input').click()"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button></div><div class="header-logo" id="header-logo">GPT Chat Viewer</div><input type="file" id="file-input" accept=".json" multiple onchange="handleFileSelect(event)"></header>
@@ -1439,12 +1440,13 @@
 
     const CHAT_FONT_MAP = {
       system: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
-      "lxgw-wenkai": "'LXGW WenKai', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
-      "smiley-sans": "'Smiley Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+      naikai: "'NaikaiFont', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+      moonstars: "'MoonStarsKai', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
       "source-han-sans": "'Source Han Sans SC', 'Source Han Sans CN', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif"
     };
     function applyChatFont() {
-      const key = (appSettings && appSettings.chatFont) ? appSettings.chatFont : 'system';
+      let key = (appSettings && appSettings.chatFont) ? appSettings.chatFont : 'system';
+      if (key === 'lxgw-wenkai' || key === 'smiley-sans') key = 'system';
       const ff = CHAT_FONT_MAP[key] || CHAT_FONT_MAP.system;
       document.documentElement.style.setProperty('--chat-font', ff);
     }
