@@ -41,50 +41,10 @@
       --font-size-small: 0.8rem;
       --font-size-xs: 0.75rem;
       --line-height: 1.6;
+      --chat-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
       --pattern-color: rgba(232, 180, 184, 0.15);
       --pattern-color-dark: rgba(232, 180, 184, 0.25);
     }
-
-  /* --- Chat content font (custom) --- */
-  @font-face{
-    font-family: "NaikaiFont";
-    src: url("fonts/NaikaiFont-Regular.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face{
-    font-family: "NaikaiFont";
-    src: url("fonts/NaikaiFont-Bold.woff2") format("woff2");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face{
-    font-family: "MoonStarsKai";
-    src: url("fonts/MoonStarsKai-Regular.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face{
-    font-family: "MoonStarsKai";
-    src: url("fonts/MoonStarsKai-Bold.woff2") format("woff2");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  /* Default chat font variable */
-  :root { --chat-font: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; }
-
-  /* Apply to chat bubbles (including markdown text) */
-  .message-bubble, .message-bubble * { font-family: var(--chat-font) !important; }
-  /* Keep code blocks monospace */
-  .message-bubble pre, .message-bubble code, .message-bubble pre *, .message-bubble code * {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
-  }
-  /* --- end custom font --- */
     [data-theme="brown"] {
       --primary: #b5a191;
       --primary-dark: #968272;
@@ -308,6 +268,22 @@
     .fontsize-btn { padding: 8px 16px; border: 2px solid var(--border); border-radius: 20px; background: var(--bg); color: var(--text); font-size: var(--font-size-small); cursor: pointer; transition: all 0.2s; }
     .fontsize-btn:hover { border-color: var(--primary); }
     .fontsize-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* 聊天字体选择器 */
+    .font-selector { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .font-btn { padding: 7px 14px; border: 2px solid var(--border); border-radius: 20px; background: var(--bg); color: var(--text); font-size: var(--font-size-xs); cursor: pointer; transition: all 0.2s; }
+    .font-btn:hover { border-color: var(--primary); }
+    .font-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .settings-font-note { margin-top: 6px; font-size: var(--font-size-xs); color: var(--text-light); text-align: center; line-height: 1.3; }
+
+    /* 自托管字体示例（把 .woff2 放到同仓库的 fonts/ 目录后再启用） */
+    /*
+    @font-face { font-family: 'NaikaiFont'; src: url('fonts/NaikaiFont-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'NaikaiFont'; src: url('fonts/NaikaiFont-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'MoonStarsKai'; src: url('fonts/MoonStarsKai-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'MoonStarsKai'; src: url('fonts/MoonStarsKai-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+    */
+
     .settings-buttons { display: flex; gap: 12px; margin-top: 24px; }
     
     /* 背景图案选择器 */
@@ -519,7 +495,10 @@
     .message.memory .message-avatar { background: var(--memory-bg); }
     .avatar-name { font-size: 0.55rem; color: var(--text-light); margin-top: 4px; max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
     .message-body { max-width: 75%; position: relative; }
-    .message-bubble { padding: 12px 16px; border-radius: 18px; line-height: var(--line-height); font-size: var(--font-size-base); word-break: break-word; white-space: pre-wrap; }
+    .message-bubble { padding: 12px 16px; border-radius: 18px; line-height: var(--line-height); font-size: var(--font-size-base); font-family: var(--chat-font); word-break: break-word; white-space: pre-wrap; }
+    .message-bubble * { font-family: inherit; }
+    .message-bubble pre, .message-bubble code, .message-bubble pre *, .message-bubble code * { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important; }
+
     .message.user .message-bubble { background: var(--user-bubble); color: var(--user-text); border-bottom-right-radius: 6px; }
     .message.assistant .message-bubble { background: var(--ai-bubble); color: var(--ai-text); border-bottom-left-radius: 6px; }
     .message.highlight .message-bubble { box-shadow: 0 0 0 3px var(--primary); }
@@ -911,11 +890,6 @@
   </style>
 </head>
 <body>
-  <div id=\"boot-error\" style=\"display:none;max-width:880px;margin:18px auto;padding:14px 16px;border:1px solid #f0b4b4;border-radius:12px;background:#fff5f5;color:#7a1f1f;font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;\">
-    <b>页面脚本启动失败。</b>
-    <div style=\"margin-top:6px;line-height:1.5;\">请打开浏览器控制台查看报错信息（F12 → Console）。</div>
-  </div>
-
   <div class="loading-overlay" id="loading-overlay"><div class="loading-spinner"></div><div class="loading-text" id="loading-text">加载中...</div></div>
   <div class="modal-overlay" id="modal-overlay"><div class="modal"><div class="modal-icon" id="modal-icon">⚠️</div><div class="modal-title" id="modal-title">确认操作</div><div class="modal-message" id="modal-message">确定要执行此操作吗？</div><div class="modal-buttons"><button class="modal-btn confirm" id="modal-confirm-btn" onclick="confirmModalAction()">确定</button><button class="modal-btn cancel" onclick="closeModal()">取消</button></div></div></div>
   
@@ -971,17 +945,8 @@
   <div class="settings-section"><label class="settings-label">自定义头像</label><div class="avatar-upload-section"><div class="avatar-upload-item"><div class="avatar-upload-preview" id="user-avatar-preview" onclick="document.getElementById('user-avatar-input').click()">🧸<span class="avatar-delete" onclick="event.stopPropagation(); deleteAvatar('user')">×</span></div><span class="avatar-upload-label">用户</span><input type="file" id="user-avatar-input" class="avatar-upload-input" accept="image/*" onchange="handleAvatarUpload(event, 'user')"></div><div class="avatar-upload-item"><div class="avatar-upload-preview" id="ai-avatar-preview" onclick="document.getElementById('ai-avatar-input').click()">🤖<span class="avatar-delete" onclick="event.stopPropagation(); deleteAvatar('ai')">×</span></div><span class="avatar-upload-label">助手</span><input type="file" id="ai-avatar-input" class="avatar-upload-input" accept="image/*" onchange="handleAvatarUpload(event, 'ai')"></div></div></div>
   <div class="settings-section"><label class="settings-label">主题颜色</label><div class="theme-selector"><div class="theme-dot pink active" data-theme="pink" onclick="selectTheme('pink')" title="樱花粉"></div><div class="theme-dot brown" data-theme="brown" onclick="selectTheme('brown')" title="奶茶棕"></div><div class="theme-dot blue" data-theme="blue" onclick="selectTheme('blue')" title="雾霾蓝"></div><div class="theme-dot purple" data-theme="purple" onclick="selectTheme('purple')" title="香芋紫"></div><div class="theme-dot green" data-theme="green" onclick="selectTheme('green')" title="抹茶绿"></div><div class="theme-dot dark" data-theme="dark" onclick="selectTheme('dark')" title="夜间模式"></div></div></div>
   <div class="settings-section"><label class="settings-label">聊天背景</label><div class="pattern-selector"><div class="pattern-option none active" data-pattern="none" onclick="selectPattern('none')" title="无"><div class="pattern-preview"></div></div><div class="pattern-option grid" data-pattern="grid" onclick="selectPattern('grid')" title="格纹"><div class="pattern-preview"></div></div><div class="pattern-option dots" data-pattern="dots" onclick="selectPattern('dots')" title="波点"><div class="pattern-preview"></div></div><div class="pattern-option stripes" data-pattern="stripes" onclick="selectPattern('stripes')" title="条纹"><div class="pattern-preview"></div></div><div class="pattern-option custom" data-pattern="custom" onclick="handleCustomBgClick()" title="自定义"><div class="pattern-preview" id="custom-bg-preview"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><span class="bg-delete" onclick="event.stopPropagation(); deleteCustomBg()">×</span></div><input type="file" id="bg-upload-input" class="avatar-upload-input" accept="image/*" onchange="handleBgUpload(event)"></div></div>
-  
-  <div class="settings-section">
-    <label class="settings-label">显示字体</label>
-    <select class="settings-input" id="chat-font-select" onchange="selectChatFont(this.value)">
-      <option value="system">系统默认</option>
-      <option value="naikai">内海简体</option>
-      <option value="moonstars">星月楷</option>
-      <option value="sourcehan">思源黑体</option>
-    </select>
-  </div>
-<div class="settings-section"><label class="settings-label">字体大小</label><div class="fontsize-selector"><button class="fontsize-btn" data-size="small" onclick="selectFontSize('small')">小</button><button class="fontsize-btn active" data-size="medium" onclick="selectFontSize('medium')">中</button><button class="fontsize-btn" data-size="large" onclick="selectFontSize('large')">大</button></div></div><div class="settings-buttons"><button class="modal-btn primary" onclick="saveSettings()">保存</button><button class="modal-btn cancel" onclick="closeSettings()">取消</button></div></div></div>
+  <div class="settings-section"><label class="settings-label">显示字体</label><select class="font-select" id="chatFontSelect" onchange="selectChatFont(this.value)"><option value="system">系统</option><option value="naikai">内海简体</option><option value="moonstars">星月楷</option><option value="source-han-sans">思源黑体</option></select></div>
+  <div class="settings-section"><label class="settings-label">字体大小</label><div class="fontsize-selector"><button class="fontsize-btn" data-size="small" onclick="selectFontSize('small')">小</button><button class="fontsize-btn active" data-size="medium" onclick="selectFontSize('medium')">中</button><button class="fontsize-btn" data-size="large" onclick="selectFontSize('large')">大</button></div></div><div class="settings-buttons"><button class="modal-btn primary" onclick="saveSettings()">保存</button><button class="modal-btn cancel" onclick="closeSettings()">取消</button></div></div></div>
   <div class="toast" id="toast"></div>
   <header class="header"><div class="header-left"><button class="header-btn" onclick="toggleDrawer()"><svg class="icon-svg" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><button class="header-btn" onclick="document.getElementById('file-input').click()"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button></div><div class="header-logo" id="header-logo">GPT Chat Viewer</div><input type="file" id="file-input" accept=".json" multiple onchange="handleFileSelect(event)"></header>
   <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer()"></div>
@@ -1117,16 +1082,7 @@
     <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.3/dist/purify.min.js"></script>
 <script>
-    
-    // Show a visible message if JS crashes early (prevents pure white screen)
-    window.addEventListener('error', function(e){
-      try{
-        const box = document.getElementById('boot-error');
-        if (box) box.style.display = 'block';
-        console.error('Boot error:', e.error || e.message || e);
-      }catch(_){}
-    });
-const DB_NAME = 'QithMiaoMiaoLogs';
+    const DB_NAME = 'QithMiaoMiaoLogs';
     const DB_VERSION = 2;
     let db = null;
     function openDatabase() {
@@ -1154,7 +1110,7 @@ const DB_NAME = 'QithMiaoMiaoLogs';
     let currentYear = new Date().getFullYear(), currentMonth = new Date().getMonth();
     let isSelectMode = false, selectedConvIds = new Set(), isFavSelectMode = false, selectedFavMsgIds = new Set(), modalConfirmCallback = null;
     let searchMode = 'current', globalSearchResults = [], currentSearchResultIndex = -1, flatSearchResults = [], isHeaderCollapsed = false;
-    let appSettings = {userName: '', aiName: '', theme: 'pink', fontSize: 'medium', pattern: 'none', userAvatar: '', aiAvatar: '', customBg: '', chatFont: 'system' };
+    let appSettings = { userName: '', aiName: '', theme: 'pink', fontSize: 'medium', pattern: 'none', chatFont: 'system', userAvatar: '', aiAvatar: '', customBg: '' };
     let currentSearchKeyword = '';
     let isComposing = false;
     let chartMode = 'heatmap';
@@ -1321,29 +1277,10 @@ const DB_NAME = 'QithMiaoMiaoLogs';
     function saveLastViewedConv(convId) { try { localStorage.setItem('lastViewedConvId', convId); } catch (e) { console.error('保存上次对话失败', e); } }
     function getLastViewedConv() { try { return localStorage.getItem('lastViewedConvId'); } catch (e) { return null; } }
     
-    
-    // --- Chat font mapping ---
-    const CHAT_FONT_MAP = {
-      system: 'system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif',
-      naikai: '"NaikaiFont", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif',
-      moonstars: '"MoonStarsKai", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif',
-      sourcehan: '"Source Han Sans SC", "Noto Sans CJK SC", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif'
-    };
-
-    function selectChatFont(value) {
-      appSettings.chatFont = value || 'system';
-      applySettings();
-    }
-    // -------------------------
-function applySettings() {
-
-      // Apply chat font
-      const fontVal = CHAT_FONT_MAP[appSettings.chatFont] || CHAT_FONT_MAP.system;
-      document.documentElement.style.setProperty('--chat-font', fontVal);
-      const fontSel = document.getElementById('chat-font-select');
-      if (fontSel) fontSel.value = appSettings.chatFont in CHAT_FONT_MAP ? appSettings.chatFont : 'system';
+    function applySettings() {
       if (appSettings.theme === 'pink') document.body.removeAttribute('data-theme'); else document.body.setAttribute('data-theme', appSettings.theme);
       if (appSettings.fontSize === 'medium') document.body.removeAttribute('data-fontsize'); else document.body.setAttribute('data-fontsize', appSettings.fontSize);
+      applyChatFont();
       applyPattern();
       updateHeaderLogo(); updatePageTitle();
       // 更新总统计卡片的名字和头像
@@ -1392,8 +1329,6 @@ function applySettings() {
           appSettings.customBg = base64;
           appSettings.pattern = 'custom';
           updateCustomBgPreview();
-      const fontSel = document.getElementById('chat-font-select');
-      if (fontSel) fontSel.value = (appSettings.chatFont && (appSettings.chatFont in CHAT_FONT_MAP)) ? appSettings.chatFont : 'system';
           document.querySelectorAll('.pattern-option').forEach(p => p.classList.toggle('active', p.dataset.pattern === 'custom'));
           applyPattern();
           showToast('背景已设置');
@@ -1491,6 +1426,8 @@ function applySettings() {
       document.getElementById('settings-ai-name').value = appSettings.aiName;
       document.querySelectorAll('.theme-dot').forEach(d => d.classList.toggle('active', d.dataset.theme === appSettings.theme));
       document.querySelectorAll('.fontsize-btn').forEach(b => b.classList.toggle('active', b.dataset.size === appSettings.fontSize));
+      const _chatFontSel = document.getElementById('chatFontSelect');
+      if (_chatFontSel) _chatFontSel.value = (appSettings.chatFont || 'system');
       document.querySelectorAll('.pattern-option').forEach(p => p.classList.toggle('active', p.dataset.pattern === appSettings.pattern));
       updateAvatarPreview('user', appSettings.userAvatar);
       updateAvatarPreview('ai', appSettings.aiAvatar);
@@ -1500,8 +1437,27 @@ function applySettings() {
     function closeSettings() { document.getElementById('settings-overlay').classList.remove('show'); }
     function selectTheme(theme) { document.querySelectorAll('.theme-dot').forEach(d => d.classList.toggle('active', d.dataset.theme === theme)); appSettings.theme = theme; if (theme === 'pink') document.body.removeAttribute('data-theme'); else document.body.setAttribute('data-theme', theme); applyPattern(); if (chartMode === 'linechart') renderLineChart(); }
     function selectFontSize(size) { document.querySelectorAll('.fontsize-btn').forEach(b => b.classList.toggle('active', b.dataset.size === size)); appSettings.fontSize = size; if (size === 'medium') document.body.removeAttribute('data-fontsize'); else document.body.setAttribute('data-fontsize', size); }
-    function saveSettings() { appSettings.userName = document.getElementById('settings-user-name').value.trim(); appSettings.aiName = document.getElementById('settings-ai-name').value.trim();
-      try { const fontSel = document.getElementById('chat-font-select'); if (fontSel) appSettings.chatFont = fontSel.value || appSettings.chatFont || 'system'; } catch(e) {} saveSettingsToStorage(); applySettings(); if (currentMessages.length > 0) renderMessages(currentMessages); closeSettings(); showToast('设置已保存'); }
+
+    const CHAT_FONT_MAP = {
+      system: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+      naikai: "'NaikaiFont', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+      moonstars: "'MoonStarsKai', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+      "source-han-sans": "'Source Han Sans SC', 'Source Han Sans CN', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+    };
+    function applyChatFont() {
+      let key = (appSettings && appSettings.chatFont) ? appSettings.chatFont : 'system';
+      if (key === 'lxgw-wenkai' || key === 'smiley-sans') key = 'system';
+      const ff = CHAT_FONT_MAP[key] || CHAT_FONT_MAP.system;
+      document.documentElement.style.setProperty('--chat-font', ff);
+    }
+    function selectChatFont(key) {
+      appSettings.chatFont = key;
+      const sel = document.getElementById('chatFontSelect');
+      if (sel && sel.value !== key) sel.value = key;
+      applyChatFont();
+    }
+
+    function saveSettings() { appSettings.userName = document.getElementById('settings-user-name').value.trim(); appSettings.aiName = document.getElementById('settings-ai-name').value.trim(); saveSettingsToStorage(); applySettings(); if (currentMessages.length > 0) renderMessages(currentMessages); closeSettings(); showToast('设置已保存'); }
     
     // 时间戳校验函数，过滤异常数据（如57370年这种）
     function isValidTimestamp(ts) {
