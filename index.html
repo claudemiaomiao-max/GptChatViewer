@@ -1397,13 +1397,13 @@
       if (un && an) {
         const hasChineseChar = hasChinese(un) || hasChinese(an);
         if (hasChineseChar) {
-          logo.innerHTML = `${escapeHtml(an)} & ${escapeHtml(un)} Logs`;
+          logo.innerHTML = `${escapeHtml(an)}&${escapeHtml(un)} Logs`;
           logo.classList.remove('font-decorative');
-          dt.innerHTML = `${escapeHtml(an)} & ${escapeHtml(un)}`;
+          dt.innerHTML = `${escapeHtml(an)}&${escapeHtml(un)}`;
           dt.classList.remove('font-decorative');
         } else {
-          logo.innerHTML = `<span class="font-decorative">${escapeHtml(an)} & ${escapeHtml(un)} Logs</span>`;
-          dt.innerHTML = `<span class="font-decorative">${escapeHtml(an)} & ${escapeHtml(un)}</span>`;
+          logo.innerHTML = `<span class="font-decorative">${escapeHtml(an)}&${escapeHtml(un)} Logs</span>`;
+          dt.innerHTML = `<span class="font-decorative">${escapeHtml(an)}&${escapeHtml(un)}</span>`;
         }
       } else if (un) {
         const hasChineseChar = hasChinese(un);
